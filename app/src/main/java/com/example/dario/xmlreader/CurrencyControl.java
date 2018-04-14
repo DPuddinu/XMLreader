@@ -13,7 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class CurrencyControl {
 
-    private List<Currency> currencyList = new ArrayList<>();
+    private List<CurrencyModel> currencyList = new ArrayList<>();
 
     public void parseDocument(String string){
 
@@ -31,7 +31,7 @@ public class CurrencyControl {
                 String name = nodeMap.getNamedItem("currency").getNodeValue();
                 String value = nodeMap.getNamedItem("rate").getNodeValue();
                 Log.e(name,value);
-                Currency currency = new Currency(name,value);
+                CurrencyModel currency = new CurrencyModel(name,value);
                 currencyList.add(currency);
             }
 
@@ -50,7 +50,7 @@ public class CurrencyControl {
         return null;
     }
 
-    public List<Currency> getCurrencyList() {
+    public List<CurrencyModel> getCurrencyList() {
         return currencyList;
     }
 }

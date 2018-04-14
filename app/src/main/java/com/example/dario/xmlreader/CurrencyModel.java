@@ -1,10 +1,10 @@
 package com.example.dario.xmlreader;
 
-public class Currency {
+public class CurrencyModel {
     private String name;
     private String rate;
 
-    public Currency(String name, String rate) {
+    public CurrencyModel(String name, String rate) {
         this.name = name;
         this.rate = rate;
     }
