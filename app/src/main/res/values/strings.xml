@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">IExchange</string>
+    <string name="nomeApp">MyConverter</string>
+    <string name="mytv">Result</string>
+    <string name="invio">Enter</string>
+    <string name="inputvalue">From</string>
+    <string name="outputvalue">To</string>
+    <string name="quantità">Amount</string>
+</resources>
