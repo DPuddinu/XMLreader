@@ -1,6 +1,8 @@
 package com.example.dario.xmlreader;
 
 import android.app.Activity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,13 +13,11 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 public class UIcontrol {
+
     private UImodel model = new UImodel();
     private Activity activity;
-    private ChangesCalculator changesCalculator;
-
-    public UIcontrol(Activity activity, ChangesCalculator changesCalculator) {
-        this.activity = activity;
-        this.changesCalculator=changesCalculator;
+    public UIcontrol(Activity activity) {
+        this.activity=activity;
     }
 
     public void setupUI(){
@@ -32,21 +32,51 @@ public class UIcontrol {
         model.setMenu2(new PopupMenu(model.getTo().getContext(),model.getTo()));
     }
 
+    public void fetchData(final CurrenciesList currenciesList) {
+
+        fillMenus(currenciesList,model.getMenu1(),model.getMenu2());
+
+
+        model.getMenu1().setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                model.getTextViewFrom().setText(item.getTitle().toString());
+                CurrencyCalculator.getInstance().setFrom(currenciesList.getCurrencyValue(item.getTitle().toString()));
+
+
+                return false;
+            }
+        });
+        model.getMenu2().setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                model.getTextViewTo().setText(item.getTitle().toString());
+                CurrencyCalculator.getInstance().setTo(currenciesList.getCurrencyValue(item.getTitle().toString()));
+
+                return false;
+            }
+        });
+
+    }
+
     public void setupListeners(){
         model.getEnter().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                changesCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
-                if(changesCalculator.isReady()){
+
+                CurrencyCalculator.getInstance().setQuantity(Double.valueOf(model.getAmount().getText().toString()));
+                if(CurrencyCalculator.getInstance().isReady()){
                     DecimalFormat df = new DecimalFormat("#.##");
-                    model.getResults().setText(df.format(changesCalculator.calculate()));
+                    model.getResults().setText(df.format(CurrencyCalculator.getInstance().calculate()));
                 }
                 else {
-                    Toast.makeText(activity, "Insert all data", Toast.LENGTH_LONG).show();
+                    Log.e("errore ","inserire tutti i dati");
                 }
             }
         });
+
 
         model.getFrom().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +91,15 @@ public class UIcontrol {
                showMenu(model.getMenu2());
             }
         });
+    }
+
+    private void fillMenus(CurrenciesList list, PopupMenu... menu){
+        for (PopupMenu temp:menu
+                ) {
+            for (int i = 0; i < list.getCurrencyList().size(); i++) {
+                temp.getMenu().add(list.getCurrencyList().get(i).getName());
+            }
+        }
     }
     private void showMenu(PopupMenu menu){
         menu.show();

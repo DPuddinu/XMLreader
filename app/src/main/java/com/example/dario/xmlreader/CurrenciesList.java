@@ -11,18 +11,25 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class CurrencyControl {
+public class CurrenciesList {
 
     private List<CurrencyModel> currencyList = new ArrayList<>();
 
-    public void parseDocument(String string){
+    private String response;
+
+    public CurrenciesList(String response) {
+        this.response = response;
+        parseDocument();
+    }
+
+    public void parseDocument(){
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
 
         try {
             builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new InputSource(new StringReader(string)));
+            Document document = builder.parse(new InputSource(new StringReader(response)));
 
             NodeList currencies = document.getElementsByTagName("Cube");
 
@@ -41,6 +48,7 @@ public class CurrencyControl {
     }
 
     public Double getCurrencyValue(String name){
+
 
         for (int i = 0; i < currencyList.size() ; i++) {
             if(name.equals(currencyList.get(i).getName())){
