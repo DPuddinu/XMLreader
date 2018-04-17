@@ -11,14 +11,14 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class CurrenciesList {
+public class CurrencyControl {
 
     private List<CurrencyModel> currencyList = new ArrayList<>();
     private HashMap<String,Double> currencyMap = new HashMap<>();
     private String response;
     private String lastUpdate;
 
-    public CurrenciesList(String response) {
+    public CurrencyControl(String response) {
         this.response = response;
         parseDocument();
     }

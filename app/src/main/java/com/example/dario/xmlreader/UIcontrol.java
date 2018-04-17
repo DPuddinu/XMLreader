@@ -1,7 +1,6 @@
 package com.example.dario.xmlreader;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -33,19 +32,19 @@ public class UIcontrol {
     }
 
     //DA NOTARE L'UTILIZZO DELLE LAMBDA EXPRESSION ANZICHE' L'USO DI CLASSI ANONIME
-    public void fetchData(final CurrenciesList currenciesList) {
+    public void setupListeners(final CurrencyControl currencyControl) {
 
-        model.getLastUpdate().setText("Last Update: "+currenciesList.getLastUpdate());
-        fillMenus(currenciesList,model.getMenu1(),model.getMenu2());
+        model.getLastUpdate().setText("Last Update: "+ currencyControl.getLastUpdate());
+        fillMenus(currencyControl,model.getMenu1(),model.getMenu2());
 
         model.getMenu1().setOnMenuItemClickListener(item -> {
             setTextViewCurrencyName(model.getTextViewFrom(),item);
-            CurrencyCalculator.getInstance().setFrom(currenciesList.getCurrencyValue(item.getTitle().toString()));
+            CurrencyCalculator.getInstance().setFrom(currencyControl.getCurrencyValue(item.getTitle().toString()));
             return false;
         });
         model.getMenu2().setOnMenuItemClickListener(item -> {
             setTextViewCurrencyName(model.getTextViewTo(),item);
-            CurrencyCalculator.getInstance().setTo(currenciesList.getCurrencyValue(item.getTitle().toString()));
+            CurrencyCalculator.getInstance().setTo(currencyControl.getCurrencyValue(item.getTitle().toString()));
             return false;
         });
         model.getEnter().setOnClickListener(v -> {
@@ -68,7 +67,7 @@ public class UIcontrol {
         CurrencyCalculator.getInstance().setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
 
-    private void fillMenus(CurrenciesList list, PopupMenu... menu){
+    private void fillMenus(CurrencyControl list, PopupMenu... menu){
         for (PopupMenu temp:menu
                 ) {
             for (CurrencyModel currency: list.getCurrencyList()

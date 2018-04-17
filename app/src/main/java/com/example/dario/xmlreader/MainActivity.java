@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
         xmlParser.fetchDocument();
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         String mResponse = m.getString("Response", "");
-        CurrenciesList currenciesList = new CurrenciesList(mResponse);
+        CurrencyControl currencyControl = new CurrencyControl(mResponse);
 
         UIcontrol uIcontrol = new UIcontrol(this);
         uIcontrol.setupUI();
-        uIcontrol.fetchData(currenciesList);
+        uIcontrol.setupListeners(currencyControl);
 
     }
 }
