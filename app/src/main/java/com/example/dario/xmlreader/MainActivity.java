@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         String mResponse = m.getString("Response", "");
         CurrenciesList currenciesList = new CurrenciesList(mResponse);
 
-
         UIcontrol uIcontrol = new UIcontrol(this);
         uIcontrol.setupUI();
         uIcontrol.fetchData(currenciesList);

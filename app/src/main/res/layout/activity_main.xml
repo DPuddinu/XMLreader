@@ -15,7 +15,7 @@
         android:backgroundTint="#38f1890a"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
-        android:text="@string/mytv"
+        android:text="@string/result"
         android:textAlignment="center"
         android:textColor="#a17f5138"
         android:textColorHint="#a17f5138"
@@ -36,7 +36,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:backgroundTint="#38f1890a"
-        android:text="@string/invio"
+        android:text="@string/enter"
         android:textColor="#a17f5138"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tvRisultato"
@@ -46,7 +46,7 @@
         android:id="@+id/fromButton"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="80dp"
         android:backgroundTint="#38f1890a"
         android:text="@string/inputvalue"
@@ -54,13 +54,13 @@
         app:layout_constraintBottom_toTopOf="@+id/tvRisultato"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.245" />
 
     <Button
         android:id="@+id/toButton"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="48dp"
         android:layout_marginTop="80dp"
         android:backgroundTint="#38f1890a"
         android:text="@string/outputvalue"
@@ -68,7 +68,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tvRisultato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.245" />
 
     <EditText
         android:id="@+id/etQuantita"
@@ -76,7 +76,7 @@
         android:layout_height="47dp"
         android:backgroundTint="#cff1890a"
         android:ems="10"
-        android:hint="@string/quantità"
+        android:hint="@string/amount"
         android:inputType="number"
         android:textAlignment="center"
         android:textColorHint="#a17f5138"
@@ -102,7 +102,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/fromButton"
         app:layout_constraintTop_toBottomOf="@+id/fromButton"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.031" />
 
     <TextView
         android:id="@+id/to"
@@ -115,9 +115,27 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/toButton"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toButton"
         app:layout_constraintTop_toBottomOf="@+id/toButton"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.038" />
+
+    <TextView
+        android:id="@+id/lastUpdate"
+        android:layout_width="167dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/update"
+        android:textAlignment="center"
+        android:textColor="#a17f5138"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047" />
 
 </android.support.constraint.ConstraintLayout>

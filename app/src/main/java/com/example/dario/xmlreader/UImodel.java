@@ -8,9 +8,21 @@ import android.widget.TextView;
 public class UImodel {
 
     private Button enter,from,to;
-    private TextView results, textViewFrom,textViewTo;
+    private TextView results, textViewFrom,textViewTo,lastUpdate;
     private EditText amount;
     private PopupMenu menu1,menu2;
+
+    public TextView getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(TextView lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public boolean isAmountEmpty(){
+        return amount.getText().toString().equals("");
+    }
 
     public PopupMenu getMenu1() {
         return menu1;

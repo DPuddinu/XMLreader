@@ -1,10 +1,7 @@
 package com.example.dario.xmlreader;
 
 import android.content.Context;
-import android.util.Log;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 public class SimpleRequest{
@@ -14,17 +11,8 @@ public class SimpleRequest{
     public void doRequest(Context context, final VolleyCallback callback){
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        callback.onSuccess(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
+                response -> callback.onSuccess(response), error -> {
+                });
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 }

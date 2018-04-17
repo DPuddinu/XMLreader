@@ -26,15 +26,17 @@ public class UIcontrol {
         model.setResults(activity.findViewById(R.id.tvRisultato));
         model.setTextViewFrom(activity.findViewById(R.id.from));
         model.setTextViewTo(activity.findViewById(R.id.to));
+        model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
         model.setMenu1(new PopupMenu(model.getFrom().getContext(),model.getFrom()));
         model.setMenu2(new PopupMenu(model.getTo().getContext(),model.getTo()));
+
     }
 
     //DA NOTARE L'UTILIZZO DELLE LAMBDA EXPRESSION ANZICHE' L'USO DI CLASSI ANONIME
     public void fetchData(final CurrenciesList currenciesList) {
 
+        model.getLastUpdate().setText("Last Update: "+currenciesList.getLastUpdate());
         fillMenus(currenciesList,model.getMenu1(),model.getMenu2());
-
 
         model.getMenu1().setOnMenuItemClickListener(item -> {
             setTextViewCurrencyName(model.getTextViewFrom(),item);
@@ -48,21 +50,22 @@ public class UIcontrol {
         });
         model.getEnter().setOnClickListener(v -> {
 
+            if(!model.isAmountEmpty())setAmount();
 
-            if(!model.getAmount().getText().toString().equals(""))CurrencyCalculator.getInstance().setQuantity(Double.valueOf(model.getAmount().getText().toString()));
             if(CurrencyCalculator.getInstance().isReady()){
                 DecimalFormat df = new DecimalFormat("#.##");
                 model.getResults().setText(df.format(CurrencyCalculator.getInstance().calculate()));
             }
-            else {
-                Toast.makeText(activity,"Inserire tutti i dati",Toast.LENGTH_LONG).show();
-            }
+            else Toast.makeText(activity,"Inserire tutti i dati",Toast.LENGTH_LONG).show();
         });
-
 
         model.getFrom().setOnClickListener(v -> model.getMenu1().show());
 
         model.getTo().setOnClickListener(v -> model.getMenu2().show());
+    }
+
+    private void setAmount() {
+        CurrencyCalculator.getInstance().setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
 
     private void fillMenus(CurrenciesList list, PopupMenu... menu){
@@ -77,7 +80,4 @@ public class UIcontrol {
     private void setTextViewCurrencyName(TextView currencyName, MenuItem item){
         currencyName.setText(item.getTitle().toString());
     }
-
-
-
 }

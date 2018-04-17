@@ -16,6 +16,7 @@ public class CurrenciesList {
     private List<CurrencyModel> currencyList = new ArrayList<>();
     private HashMap<String,Double> currencyMap = new HashMap<>();
     private String response;
+    private String lastUpdate;
 
     public CurrenciesList(String response) {
         this.response = response;
@@ -32,9 +33,10 @@ public class CurrenciesList {
             Document document = builder.parse(new InputSource(new StringReader(response)));
 
             NodeList currencies = document.getElementsByTagName("Cube");
-
+            NamedNodeMap nodeMap = currencies.item(1).getAttributes();
+            lastUpdate = nodeMap.getNamedItem("time").getNodeValue();
             for (int i = 2; i < currencies.getLength() ; i++) {
-                NamedNodeMap nodeMap = currencies.item(i).getAttributes();
+                nodeMap = currencies.item(i).getAttributes();
                 String name = nodeMap.getNamedItem("currency").getNodeValue();
                 String value = nodeMap.getNamedItem("rate").getNodeValue();
 
@@ -46,6 +48,10 @@ public class CurrenciesList {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
     }
 
     public Double getCurrencyValue(String name){
