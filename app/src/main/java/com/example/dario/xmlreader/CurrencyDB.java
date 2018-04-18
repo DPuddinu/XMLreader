@@ -2,21 +2,31 @@ package com.example.dario.xmlreader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
-public class CurrencyDB {
+public class CurrencyDB extends Observable{
 
     private static CurrencyDB mInstance;
     private String lastUpdate;
     private List<CurrencyModel> currencyList = new ArrayList<>();
     private HashMap<String,Double> currencyMap = new HashMap<>();
 
+    public CurrencyModel getLastItem(){
+        return currencyList.get(currencyList.size()-1);
+    }
     public static synchronized CurrencyDB getInstance() {
         if (mInstance == null) {
             mInstance = new CurrencyDB();
         }
+
         return mInstance;
     }
-
+    public void addCurrency(CurrencyModel currency){
+        currencyList.add(currency);
+        currencyMap.put(currency.getShortName(),currency.getRate());
+        setChanged();
+        notifyObservers();
+    }
 
     public String getLastUpdate() {
         return lastUpdate;

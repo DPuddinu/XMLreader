@@ -1,14 +1,17 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class UIcontrol {
+public class UIcontrol implements Observer{
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
@@ -16,7 +19,6 @@ public class UIcontrol {
         this.activity=activity;
     }
 
-    //DA NOTARE L'UTILIZZO DELLE LAMBDA EXPRESSION ANZICHE' L'USO DI CLASSI ANONIME
     public void setupListeners() {
 
         model.getMenu1().setOnMenuItemClickListener(item -> {
@@ -57,21 +59,21 @@ public class UIcontrol {
         model.setMenu2(new PopupMenu(model.getTo().getContext(),model.getTo()));
 
         model.getLastUpdate().setText("Last Update: "+ CurrencyDB.getInstance().getLastUpdate());
-        fillMenus(CurrencyDB.getInstance().getCurrencyList(),model.getMenu1(),model.getMenu2());
+
     }
     private void setAmount() {
         currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
-    private void fillMenus(List<CurrencyModel> list, PopupMenu... menu){
-        for (PopupMenu tempMenu:menu
-                ) {
-            for (CurrencyModel currency: list
-                 ) {
-                tempMenu.getMenu().add(currency.getShortName());
-            }
-        }
-    }
+
+
+
     private void setTextViewCurrencyName(TextView currencyName, MenuItem item){
         currencyName.setText(item.getTitle().toString());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        model.getMenu1().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
+        model.getMenu2().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
     }
 }

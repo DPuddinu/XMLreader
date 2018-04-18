@@ -21,10 +21,12 @@ public class MainActivity extends AppCompatActivity {
         String mResponse = m.getString("Response", "");
 
         ResponseParser responseParser = new ResponseParser();
-        responseParser.parseDocument(mResponse,CurrencyDB.getInstance().getCurrencyList(),CurrencyDB.getInstance().getCurrencyMap());
-
         UIcontrol uIcontrol = new UIcontrol(this);
+        CurrencyDB.getInstance().addObserver(uIcontrol);
         uIcontrol.setupUI();
         uIcontrol.setupListeners();
+        responseParser.parseDocument(mResponse);
+
+
     }
 }
