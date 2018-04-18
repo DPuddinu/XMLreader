@@ -15,8 +15,10 @@ public class UIcontrol implements Observer{
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
+
     public UIcontrol(Activity activity) {
         this.activity=activity;
+
     }
 
     public void setupListeners() {
@@ -57,15 +59,12 @@ public class UIcontrol implements Observer{
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
         model.setMenu1(new PopupMenu(model.getFrom().getContext(),model.getFrom()));
         model.setMenu2(new PopupMenu(model.getTo().getContext(),model.getTo()));
-
-        model.getLastUpdate().setText("Last Update: "+ CurrencyDB.getInstance().getLastUpdate());
+        model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
 
     }
     private void setAmount() {
         currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
-
-
 
     private void setTextViewCurrencyName(TextView currencyName, MenuItem item){
         currencyName.setText(item.getTitle().toString());
@@ -73,6 +72,7 @@ public class UIcontrol implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+        model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
         model.getMenu1().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
         model.getMenu2().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
     }

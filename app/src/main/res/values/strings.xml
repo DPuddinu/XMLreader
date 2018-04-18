@@ -9,4 +9,7 @@
     <string name="fullname">Full Name</string>
     <string name="shortname">Short Name</string>
     <string name="rate">Rate</string>
+    <string name="action_favorite">Favorites</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_addCustomCurrency">Add Currency</string>
 </resources>

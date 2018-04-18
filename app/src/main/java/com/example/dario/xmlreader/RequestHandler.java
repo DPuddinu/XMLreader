@@ -3,6 +3,7 @@ package com.example.dario.xmlreader;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 
 public class RequestHandler {
 

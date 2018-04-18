@@ -10,12 +10,16 @@ public class CurrencyModel {
         this.rate = rate;
     }
 
-    public String getShortName() {
-        return shortName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getShortName() {
+        return shortName;
     }
 
     public Double getRate() {
@@ -26,11 +30,4 @@ public class CurrencyModel {
         this.rate = rate;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 }

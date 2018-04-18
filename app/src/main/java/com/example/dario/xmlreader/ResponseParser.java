@@ -1,5 +1,7 @@
 package com.example.dario.xmlreader;
 
+import android.util.Log;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -24,8 +26,11 @@ public class ResponseParser {
 
             NodeList currencies = document.getElementsByTagName("Cube");
             NamedNodeMap nodeMap = currencies.item(1).getAttributes();
-            String lastUpdate= nodeMap.getNamedItem("time").getNodeValue();
-            CurrencyDB.getInstance().setLastUpdate(lastUpdate);
+
+            CurrencyDB.getInstance().setLastUpdate( nodeMap.getNamedItem("time").getNodeValue());
+            Log.e("time", CurrencyDB.getInstance().getLastUpdate());
+            CurrencyModel euro = new CurrencyModel("EUR","1");
+            CurrencyDB.getInstance().addCurrency(euro);
             for (int i = 2; i < currencies.getLength() ; i++) {
                 nodeMap = currencies.item(i).getAttributes();
                 String name = nodeMap.getNamedItem("currency").getNodeValue();
