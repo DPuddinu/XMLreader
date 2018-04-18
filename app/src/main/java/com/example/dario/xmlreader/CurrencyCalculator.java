@@ -1,19 +1,12 @@
 package com.example.dario.xmlreader;
 
 class CurrencyCalculator {
-    private static final CurrencyCalculator ourInstance = new CurrencyCalculator();
+
 
     private double from;
     private double to;
     private double quantity;
 
-
-    static CurrencyCalculator getInstance() {
-        return ourInstance;
-    }
-
-    private CurrencyCalculator() {
-    }
 
     public boolean isReady(){
         return from != 0 && to != 0 && quantity != 0;

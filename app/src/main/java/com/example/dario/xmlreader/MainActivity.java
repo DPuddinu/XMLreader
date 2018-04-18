@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    private XmlParser xmlParser = new XmlParser(this);
+    private RequestHandler requestHandler = new RequestHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        xmlParser.fetchDocument();
+        requestHandler.fetchDocument();
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         String mResponse = m.getString("Response", "");
 

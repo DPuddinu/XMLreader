@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class XmlParser  {
+public class RequestHandler {
 
     private RatesRequest ratesRequest = new RatesRequest();
     private Context context;
 
-    public XmlParser(Context context) {
+    public RequestHandler(Context context) {
         this.context = context;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class UIcontrol {
-
+    private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
     public UIcontrol(Activity activity) {
@@ -21,21 +21,21 @@ public class UIcontrol {
 
         model.getMenu1().setOnMenuItemClickListener(item -> {
             setTextViewCurrencyName(model.getTextViewFrom(),item);
-            CurrencyCalculator.getInstance().setFrom(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
+            currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
             return false;
         });
         model.getMenu2().setOnMenuItemClickListener(item -> {
             setTextViewCurrencyName(model.getTextViewTo(),item);
-            CurrencyCalculator.getInstance().setTo(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
+            currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
             return false;
         });
         model.getEnter().setOnClickListener(v -> {
 
             if(!model.isAmountEmpty())setAmount();
 
-            if(CurrencyCalculator.getInstance().isReady()){
+            if(currencyCalculator.isReady()){
                 DecimalFormat df = new DecimalFormat("#.##");
-                model.getResults().setText(df.format(CurrencyCalculator.getInstance().calculate()));
+                model.getResults().setText(df.format(currencyCalculator.calculate()));
             }
             else Toast.makeText(activity,"Inserire tutti i dati",Toast.LENGTH_LONG).show();
         });
@@ -60,7 +60,7 @@ public class UIcontrol {
         fillMenus(CurrencyDB.getInstance().getCurrencyList(),model.getMenu1(),model.getMenu2());
     }
     private void setAmount() {
-        CurrencyCalculator.getInstance().setQuantity(Double.valueOf(model.getAmount().getText().toString()));
+        currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
     private void fillMenus(List<CurrencyModel> list, PopupMenu... menu){
         for (PopupMenu tempMenu:menu

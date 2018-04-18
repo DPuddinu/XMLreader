@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class ResponseParser {
 
+
     public void parseDocument(String response, List<CurrencyModel> currencyList, HashMap<String,Double> currencyMap ){
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
