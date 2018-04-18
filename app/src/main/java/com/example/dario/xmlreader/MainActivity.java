@@ -19,11 +19,12 @@ public class MainActivity extends AppCompatActivity {
         xmlParser.fetchDocument();
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         String mResponse = m.getString("Response", "");
-        CurrencyControl currencyControl = new CurrencyControl(mResponse);
+
+        ResponseParser responseParser = new ResponseParser();
+        responseParser.parseDocument(mResponse,CurrencyDB.getInstance().getCurrencyList(),CurrencyDB.getInstance().getCurrencyMap());
 
         UIcontrol uIcontrol = new UIcontrol(this);
         uIcontrol.setupUI();
-        uIcontrol.setupListeners(currencyControl);
-
+        uIcontrol.setupListeners();
     }
 }

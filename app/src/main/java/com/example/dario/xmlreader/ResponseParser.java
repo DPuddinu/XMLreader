@@ -11,19 +11,9 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class CurrencyControl {
+public class ResponseParser {
 
-    private List<CurrencyModel> currencyList = new ArrayList<>();
-    private HashMap<String,Double> currencyMap = new HashMap<>();
-    private String response;
-    private String lastUpdate;
-
-    public CurrencyControl(String response) {
-        this.response = response;
-        parseDocument();
-    }
-
-    public void parseDocument(){
+    public void parseDocument(String response, List<CurrencyModel> currencyList, HashMap<String,Double> currencyMap ){
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
@@ -34,7 +24,7 @@ public class CurrencyControl {
 
             NodeList currencies = document.getElementsByTagName("Cube");
             NamedNodeMap nodeMap = currencies.item(1).getAttributes();
-            lastUpdate = nodeMap.getNamedItem("time").getNodeValue();
+            CurrencyDB.getInstance().setLastUpdate(nodeMap.getNamedItem("time").getNodeValue());
             for (int i = 2; i < currencies.getLength() ; i++) {
                 nodeMap = currencies.item(i).getAttributes();
                 String name = nodeMap.getNamedItem("currency").getNodeValue();
@@ -48,18 +38,5 @@ public class CurrencyControl {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public Double getCurrencyValue(String name){
-
-        return currencyMap.get(name);
-    }
-
-    public List<CurrencyModel> getCurrencyList() {
-        return currencyList;
     }
 }

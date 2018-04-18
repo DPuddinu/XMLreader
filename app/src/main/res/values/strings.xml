@@ -6,4 +6,7 @@
     <string name="outputvalue">To</string>
     <string name="amount">Amount</string>
     <string name="update">Last Update: </string>
+    <string name="fullname">Full Name</string>
+    <string name="shortname">Short Name</string>
+    <string name="rate">Rate</string>
 </resources>

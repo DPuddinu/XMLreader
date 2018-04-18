@@ -5,21 +5,20 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class MySingleton {
-    private static MySingleton mInstance;
+public class RequestManager {
+    private static RequestManager mInstance;
     private RequestQueue mRequestQueue;
 
-    private static Context mCtx;
+    private Context mCtx;
 
-    private MySingleton(Context context) {
+    private RequestManager(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-
     }
 
-    public static synchronized MySingleton getInstance(Context context) {
+    public static synchronized RequestManager getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new MySingleton(context);
+            mInstance = new RequestManager(context);
         }
         return mInstance;
     }
