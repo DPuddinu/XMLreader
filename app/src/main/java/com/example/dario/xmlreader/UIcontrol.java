@@ -1,5 +1,8 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
+import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
@@ -47,6 +50,10 @@ public class UIcontrol implements Observer{
         model.getFrom().setOnClickListener(v -> model.getMenu1().show());
         model.getTo().setOnClickListener(v -> model.getMenu2().show());
     }
+    public void setupDate(){
+        model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
+    }
+
     public void setupUI(){
 
         model.setEnter((activity.findViewById(R.id.invio)));
@@ -72,8 +79,10 @@ public class UIcontrol implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
-        model.getMenu1().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
-        model.getMenu2().getMenu().add(CurrencyDB.getInstance().getLastItem().getShortName());
+        String lastItem = CurrencyDB.getInstance().getLastItem().getShortName();
+        /*SpannableString s = new SpannableString(lastItem);
+        s.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, s.length(), 0);*/
+        model.getMenu1().getMenu().add(lastItem);
+        model.getMenu2().getMenu().add(lastItem);
     }
 }

@@ -1,11 +1,10 @@
 package com.example.dario.xmlreader;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+
+        setSupportActionBar(findViewById(R.id.my_toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         requestHandler.fetchDocument();
@@ -32,10 +31,8 @@ public class MainActivity extends AppCompatActivity {
         CurrencyDB.getInstance().addObserver(uIcontrol);
         uIcontrol.setupUI();
         responseParser.parseDocument(mResponse);
-
+        uIcontrol.setupDate();
         uIcontrol.setupListeners();
-
-
     }
 
     @Override
@@ -47,15 +44,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // TODO
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Log.e("cliccato","action settings");
-            return true;
+            case R.id.action_favorite:
+                // TODO
+                return true;
+
+            case R.id.add_currency:
+                Intent intent = new Intent(this, CustomCurrency.class);
+                startActivity(intent);
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+            return super.onOptionsItemSelected(item);
         }
-
-
-        return super.onOptionsItemSelected(item);
     }
 }

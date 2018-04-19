@@ -19,7 +19,6 @@ public class CurrencyDB extends Observable{
             mInstance = new CurrencyDB();
         }
 
-
         return mInstance;
     }
     public void addCurrency(CurrencyModel currency){
