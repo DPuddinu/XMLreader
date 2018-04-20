@@ -2,6 +2,7 @@ package com.example.dario.xmlreader;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,9 +31,14 @@ public class MainActivity extends AppCompatActivity {
         UIcontrol uIcontrol = new UIcontrol(this);
         CurrencyDB.getInstance().addObserver(uIcontrol);
         uIcontrol.setupUI();
-        responseParser.parseDocument(mResponse);
+        responseParser.parseDocument(this,mResponse);
         uIcontrol.setupDate();
+        loadFullNames();
         uIcontrol.setupListeners();
+    }
+
+    private void loadFullNames(){
+
     }
 
     @Override
@@ -57,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, CustomCurrency.class);
                 startActivity(intent);
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+
             return super.onOptionsItemSelected(item);
         }
     }

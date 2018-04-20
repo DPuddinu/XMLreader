@@ -1,15 +1,10 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
-import android.text.Layout;
-import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,18 +16,17 @@ public class UIcontrol implements Observer{
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
-
     }
 
     public void setupListeners() {
 
         model.getMenu1().setOnMenuItemClickListener(item -> {
-            setTextViewCurrencyName(model.getTextViewFrom(),item);
+            model.getTextViewFrom().setText(CurrencyDB.getInstance().getShortName(item.getTitle().toString()));
             currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
             return false;
         });
         model.getMenu2().setOnMenuItemClickListener(item -> {
-            setTextViewCurrencyName(model.getTextViewTo(),item);
+            model.getTextViewTo().setText(CurrencyDB.getInstance().getShortName(item.getTitle().toString()));
             currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
             return false;
         });
@@ -53,7 +47,6 @@ public class UIcontrol implements Observer{
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
     }
-
     public void setupUI(){
 
         model.setEnter((activity.findViewById(R.id.invio)));
@@ -73,15 +66,10 @@ public class UIcontrol implements Observer{
         currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
 
-    private void setTextViewCurrencyName(TextView currencyName, MenuItem item){
-        currencyName.setText(item.getTitle().toString());
-    }
 
     @Override
     public void update(Observable o, Object arg) {
-        String lastItem = CurrencyDB.getInstance().getLastItem().getShortName();
-        /*SpannableString s = new SpannableString(lastItem);
-        s.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, s.length(), 0);*/
+        String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
         model.getMenu1().getMenu().add(lastItem);
         model.getMenu2().getMenu().add(lastItem);
     }

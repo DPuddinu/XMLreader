@@ -5,7 +5,8 @@ public class CurrencyModel {
     private String shortName;
     private String rate;
 
-    public CurrencyModel(String shortName, String rate) {
+    public CurrencyModel(String fullName,String shortName, String rate) {
+        this.fullName=fullName;
         this.shortName = shortName;
         this.rate = rate;
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fullnames">
+
+        <item>US dollar</item>
+        <item>Japanese yen</item>
+        <item>Bulgarian lev</item>
+        <item>Czech koruna</item>
+        <item>Danish krone</item>
+        <item>Pound sterling</item>
+        <item>Hungarian forint</item>
+        <item>Polish zloty</item>
+        <item>Romanian leu</item>
+        <item>Swedish krona</item>
+
+        <item>Swiss franc</item>
+        <item>Icelandic krona</item>
+        <item>Norwegian krone</item>
+        <item>Croatian kuna</item>
+        <item>Russian rouble</item>
+        <item>Turkish lira</item>
+        <item>Australian dollar</item>
+        <item>Brazilian real</item>
+        <item>Canadian dollar</item>
+        <item>Chinese yuan renminbi</item>
+
+        <item>Hong Kong dollar</item>
+        <item>Indonesian rupiah</item>
+        <item>Israeli shekel</item>
+        <item>Indian rupee</item>
+        <item>South Korean won</item>
+        <item>Mexican peso</item>
+        <item>Malaysian ringgit</item>
+        <item>New Zealand dollar</item>
+        <item>Philippine piso</item>
+        <item>Singapore dollar</item>
+
+        <item>Thai baht</item>
+        <item>South African rand</item>
+
+
+    </string-array>
+
+
+</resources>

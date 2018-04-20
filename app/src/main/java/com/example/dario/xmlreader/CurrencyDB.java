@@ -1,4 +1,5 @@
 package com.example.dario.xmlreader;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ public class CurrencyDB extends Observable{
     public CurrencyModel getLastItem(){
         return currencyList.get(currencyList.size()-1);
     }
+
     public static synchronized CurrencyDB getInstance() {
         if (mInstance == null) {
             mInstance = new CurrencyDB();
@@ -21,9 +23,18 @@ public class CurrencyDB extends Observable{
 
         return mInstance;
     }
+    public String getShortName(String fullname){
+        for (int i = 0; i < currencyList.size(); i++) {
+            if(fullname.equals(currencyList.get(i).getFullName())){
+                return currencyList.get(i).getShortName();
+            }
+        }
+        return null;
+    }
+
     public void addCurrency(CurrencyModel currency){
         currencyList.add(currency);
-        currencyMap.put(currency.getShortName(),currency.getRate());
+        currencyMap.put(currency.getFullName(),currency.getRate());
         setChanged();
         notifyObservers();
     }

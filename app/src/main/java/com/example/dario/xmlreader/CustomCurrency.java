@@ -27,7 +27,7 @@ public class CustomCurrency extends AppCompatActivity {
             String shortname=shortName.getText().toString();
             String temp=rate.getText().toString();
 
-            CurrencyModel model = new CurrencyModel(shortname,temp);
+            CurrencyModel model = new CurrencyModel(fullname,shortname,temp);
             CurrencyDB.getInstance().addCurrency(model);
 
 
