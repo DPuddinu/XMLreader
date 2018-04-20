@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Currency Converter</string>
     <string name="result">Result</string>
+    <string name="convert">Convert</string>
     <string name="enter">Enter</string>
     <string name="inputvalue">From</string>
     <string name="outputvalue">To</string>
