@@ -1,10 +1,14 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,6 +17,10 @@ public class UIcontrol implements Observer{
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
+    private ArrayList<String> arrayList1 = new ArrayList<>();
+    private boolean isFrom=true;
+
+    private ArrayAdapter<String> adapter1;
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
@@ -20,16 +28,14 @@ public class UIcontrol implements Observer{
 
     public void setupListeners() {
 
-        model.getMenu1().setOnMenuItemClickListener(item -> {
-            model.getTextViewFrom().setText(CurrencyDB.getInstance().getShortName(item.getTitle().toString()));
-            currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
-            return false;
+        model.getList1().setOnItemClickListener((parent, view, position, id) -> {
+
+            sourceSetup(parent.getItemAtPosition(position).toString());
+            showListView(model.getList1());
         });
-        model.getMenu2().setOnMenuItemClickListener(item -> {
-            model.getTextViewTo().setText(CurrencyDB.getInstance().getShortName(item.getTitle().toString()));
-            currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(item.getTitle().toString()));
-            return false;
-        });
+
+
+
         model.getEnter().setOnClickListener(v -> {
 
             if(!model.isAmountEmpty())setAmount();
@@ -38,15 +44,47 @@ public class UIcontrol implements Observer{
                 DecimalFormat df = new DecimalFormat("#.##");
                 model.getResults().setText(df.format(currencyCalculator.calculate()));
             }
-            else Toast.makeText(activity,"Inserire tutti i dati",Toast.LENGTH_LONG).show();
+            else Toast.makeText(activity,"Please insert all data",Toast.LENGTH_LONG).show();
         });
 
-        model.getFrom().setOnClickListener(v -> model.getMenu1().show());
-        model.getTo().setOnClickListener(v -> model.getMenu2().show());
+        model.getFrom().setOnClickListener(v -> {
+            showListView(model.getList1());
+            isFrom=true;
+        });
+        model.getTo().setOnClickListener(v ->{
+           showListView(model.getList1());
+           isFrom=false;
+        });
+    }
+    private void sourceSetup(String name){
+
+        if(isFrom==true){
+            currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(name));
+            model.getTextViewFrom().setText(CurrencyDB.getInstance().getShortName(name));
+        }
+        else {
+            model.getTextViewTo().setText(CurrencyDB.getInstance().getShortName(name));
+            currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(name));
+        }
+    }
+
+
+    public void showListView(ListView listView){
+        if(listView.getVisibility()==View.VISIBLE)listView.setVisibility(View.INVISIBLE);
+        else listView.setVisibility(View.VISIBLE);
+
     }
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
     }
+    public void setupAdapter(){
+
+        Log.e("size",""+arrayList1.size());
+        adapter1 =new ArrayAdapter<>(activity,R.layout.row,arrayList1);
+        model.getList1().setAdapter(adapter1);
+    }
+
+
     public void setupUI(){
 
         model.setEnter((activity.findViewById(R.id.invio)));
@@ -57,8 +95,8 @@ public class UIcontrol implements Observer{
         model.setTextViewFrom(activity.findViewById(R.id.from));
         model.setTextViewTo(activity.findViewById(R.id.to));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setMenu1(new PopupMenu(model.getFrom().getContext(),model.getFrom()));
-        model.setMenu2(new PopupMenu(model.getTo().getContext(),model.getTo()));
+        model.setList1(activity.findViewById(R.id.listview1));
+
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
 
     }
@@ -70,7 +108,12 @@ public class UIcontrol implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
-        model.getMenu1().getMenu().add(lastItem);
-        model.getMenu2().getMenu().add(lastItem);
+        arrayList1.add(lastItem);
+        if(arrayList1.size()>35)
+        updateList();
+    }
+    public void updateList(){
+        adapter1.notifyDataSetChanged();
+
     }
 }

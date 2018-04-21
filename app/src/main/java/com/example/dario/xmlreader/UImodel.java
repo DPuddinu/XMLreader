@@ -1,16 +1,41 @@
 package com.example.dario.xmlreader;
 
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class UImodel {
 
     private Button enter,from,to;
     private TextView results, textViewFrom,textViewTo,lastUpdate;
     private EditText amount;
-    private PopupMenu menu1,menu2;
+    private ListView list1;
+
+
+    public ListView getList1() {
+        return list1;
+    }
+
+    public void setList1(ListView list1) {
+        this.list1 = list1;
+    }
+
+
+
+    public ArrayList<String> getStrings() {
+        return strings;
+    }
+
+    public void setStrings(ArrayList<String> strings) {
+        this.strings = strings;
+    }
+
+    private ArrayList<String> strings=new ArrayList<>();
 
     public TextView getLastUpdate() {
         return lastUpdate;
@@ -24,21 +49,7 @@ public class UImodel {
         return amount.getText().toString().equals("");
     }
 
-    public PopupMenu getMenu1() {
-        return menu1;
-    }
 
-    public void setMenu1(PopupMenu menu1) {
-        this.menu1 = menu1;
-    }
-
-    public PopupMenu getMenu2() {
-        return menu2;
-    }
-
-    public void setMenu2(PopupMenu menu2) {
-        this.menu2 = menu2;
-    }
 
     public Button getEnter() {
         return enter;

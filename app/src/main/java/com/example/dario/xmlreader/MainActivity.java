@@ -33,13 +33,10 @@ public class MainActivity extends AppCompatActivity {
         uIcontrol.setupUI();
         responseParser.parseDocument(this,mResponse);
         uIcontrol.setupDate();
-        loadFullNames();
         uIcontrol.setupListeners();
+        uIcontrol.setupAdapter();
     }
 
-    private void loadFullNames(){
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
