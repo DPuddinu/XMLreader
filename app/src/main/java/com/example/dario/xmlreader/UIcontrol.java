@@ -1,6 +1,7 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,12 +15,16 @@ import java.util.Observer;
 
 
 public class UIcontrol implements Observer{
+
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
     private ArrayList<String> arrayList1 = new ArrayList<>();
     private boolean isFrom=true;
     private ArrayAdapter<String> adapter1;
+    private int itemPosition;
+
+
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
@@ -51,6 +56,11 @@ public class UIcontrol implements Observer{
            showListView();
            isFrom=false;
         });
+
+        model.getList1().setOnItemLongClickListener((parent, view, position, id) -> {
+            itemPosition=position;
+            return false;
+        });
     }
     private void sourceSetup(String name){
 
@@ -70,7 +80,9 @@ public class UIcontrol implements Observer{
     public void showListView(){
         if(model.getList1().getVisibility()==View.VISIBLE)model.getList1().setVisibility(View.INVISIBLE);
         else model.getList1().setVisibility(View.VISIBLE);
-
+    }
+    public void setupContextMenu(){
+        activity.registerForContextMenu(model.getList1());
     }
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
@@ -102,10 +114,19 @@ public class UIcontrol implements Observer{
     public void update(Observable o, Object arg) {
         String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
         arrayList1.add(lastItem);
-        updateList();
     }
-    public void updateList(){
-        adapter1.notifyDataSetChanged();
 
+    public boolean popupOperation(int itemId) {
+        switch (itemId){
+            case R.id.remove:
+                arrayList1.remove(itemPosition);
+                adapter1.notifyDataSetChanged();
+                return true;
+
+
+
+
+            default: return false;
+        }
     }
 }

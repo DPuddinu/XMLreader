@@ -2,13 +2,16 @@ package com.example.dario.xmlreader;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,8 +41,20 @@ public class MainActivity extends AppCompatActivity {
         uIcontrol.setupListeners();
         responseParser.parseDocument(this,mResponse);
         uIcontrol.setupDate();
+        uIcontrol.setupContextMenu();
+    }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.popup, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        uIcontrol.popupOperation(item.getItemId());
+        return super.onContextItemSelected(item);
     }
 
     @Override

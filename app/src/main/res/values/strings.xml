@@ -13,4 +13,6 @@
     <string name="action_favorite">Favorites</string>
     <string name="action_settings">Settings</string>
     <string name="action_addCustomCurrency">Add Currency</string>
+    <string name="remove">Remove</string>
+    <string name="addtopreferred">Add to favorited</string>
 </resources>
