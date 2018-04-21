@@ -19,22 +19,17 @@ public class UIcontrol implements Observer{
     private Activity activity;
     private ArrayList<String> arrayList1 = new ArrayList<>();
     private boolean isFrom=true;
-
     private ArrayAdapter<String> adapter1;
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
     }
-
     public void setupListeners() {
 
         model.getList1().setOnItemClickListener((parent, view, position, id) -> {
-
             sourceSetup(parent.getItemAtPosition(position).toString());
-            showListView(model.getList1());
+            showListView();
         });
-
-
 
         model.getEnter().setOnClickListener(v -> {
 
@@ -48,17 +43,18 @@ public class UIcontrol implements Observer{
         });
 
         model.getFrom().setOnClickListener(v -> {
-            showListView(model.getList1());
+            showListView();
             isFrom=true;
         });
+
         model.getTo().setOnClickListener(v ->{
-           showListView(model.getList1());
+           showListView();
            isFrom=false;
         });
     }
     private void sourceSetup(String name){
 
-        if(isFrom==true){
+        if(isFrom){
             currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(name));
             model.getTextViewFrom().setText(CurrencyDB.getInstance().getShortName(name));
         }
@@ -67,23 +63,22 @@ public class UIcontrol implements Observer{
             currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(name));
         }
     }
+    public void hideListView(){
+        model.getList1().setVisibility(View.INVISIBLE);
+    }
 
-
-    public void showListView(ListView listView){
-        if(listView.getVisibility()==View.VISIBLE)listView.setVisibility(View.INVISIBLE);
-        else listView.setVisibility(View.VISIBLE);
+    public void showListView(){
+        if(model.getList1().getVisibility()==View.VISIBLE)model.getList1().setVisibility(View.INVISIBLE);
+        else model.getList1().setVisibility(View.VISIBLE);
 
     }
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
     }
     public void setupAdapter(){
-
-        Log.e("size",""+arrayList1.size());
         adapter1 =new ArrayAdapter<>(activity,R.layout.row,arrayList1);
         model.getList1().setAdapter(adapter1);
     }
-
 
     public void setupUI(){
 
@@ -96,7 +91,6 @@ public class UIcontrol implements Observer{
         model.setTextViewTo(activity.findViewById(R.id.to));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
         model.setList1(activity.findViewById(R.id.listview1));
-
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
 
     }
@@ -104,12 +98,10 @@ public class UIcontrol implements Observer{
         currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
     }
 
-
     @Override
     public void update(Observable o, Object arg) {
         String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
         arrayList1.add(lastItem);
-        if(arrayList1.size()>35)
         updateList();
     }
     public void updateList(){

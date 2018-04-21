@@ -30,8 +30,6 @@ public class CustomCurrency extends AppCompatActivity {
             CurrencyModel model = new CurrencyModel(fullname,shortname,temp);
             CurrencyDB.getInstance().addCurrency(model);
 
-
-
         });
     }
 }
