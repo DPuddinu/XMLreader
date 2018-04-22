@@ -1,12 +1,17 @@
 package com.example.dario.xmlreader;
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -21,20 +26,12 @@ public class UIcontrol implements Observer{
     private Activity activity;
     private ArrayList<String> arrayList1 = new ArrayList<>();
     private boolean isFrom=true;
-    private ArrayAdapter<String> adapter1;
-    private int itemPosition;
-
-
+    private RecycleViewAdapter rowAdapter;
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
     }
     public void setupListeners() {
-
-        model.getList1().setOnItemClickListener((parent, view, position, id) -> {
-            sourceSetup(parent.getItemAtPosition(position).toString());
-            showListView();
-        });
 
         model.getEnter().setOnClickListener(v -> {
 
@@ -57,12 +54,16 @@ public class UIcontrol implements Observer{
            isFrom=false;
         });
 
-        model.getList1().setOnItemLongClickListener((parent, view, position, id) -> {
-            itemPosition=position;
+        model.getmRecyclerView().setOnLongClickListener(v -> {
+//                itemPosition=rowAdapter.
+
+
             return false;
         });
+
     }
-    private void sourceSetup(String name){
+
+    public void sourceSetup(String name){
 
         if(isFrom){
             currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(name));
@@ -73,23 +74,29 @@ public class UIcontrol implements Observer{
             currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(name));
         }
     }
+
     public void hideListView(){
-        model.getList1().setVisibility(View.INVISIBLE);
+        model.getmRecyclerView().setVisibility(View.INVISIBLE);
     }
 
     public void showListView(){
-        if(model.getList1().getVisibility()==View.VISIBLE)model.getList1().setVisibility(View.INVISIBLE);
-        else model.getList1().setVisibility(View.VISIBLE);
+        if(model.getmRecyclerView().getVisibility()==View.VISIBLE)model.getmRecyclerView().setVisibility(View.INVISIBLE);
+        else model.getmRecyclerView().setVisibility(View.VISIBLE);
     }
     public void setupContextMenu(){
-        activity.registerForContextMenu(model.getList1());
+        activity.registerForContextMenu(model.getmRecyclerView());
     }
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
     }
     public void setupAdapter(){
-        adapter1 =new ArrayAdapter<>(activity,R.layout.row,arrayList1);
-        model.getList1().setAdapter(adapter1);
+        rowAdapter = new RecycleViewAdapter(this,activity,arrayList1);
+        model.getmRecyclerView().setAdapter(rowAdapter);
+
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 
     public void setupUI(){
@@ -102,9 +109,12 @@ public class UIcontrol implements Observer{
         model.setTextViewFrom(activity.findViewById(R.id.from));
         model.setTextViewTo(activity.findViewById(R.id.to));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setList1(activity.findViewById(R.id.listview1));
+        model.setmRecyclerView(activity.findViewById(R.id.my_recycler_view));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
+        model.setmRecyclerView(activity.findViewById(R.id.my_recycler_view));
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        model.getmRecyclerView().setLayoutManager(linearLayoutManager);
     }
     private void setAmount() {
         currencyCalculator.setQuantity(Double.valueOf(model.getAmount().getText().toString()));
@@ -119,11 +129,9 @@ public class UIcontrol implements Observer{
     public boolean popupOperation(int itemId) {
         switch (itemId){
             case R.id.remove:
-                arrayList1.remove(itemPosition);
-                adapter1.notifyDataSetChanged();
+                arrayList1.remove(rowAdapter.getItemPosition());
+                rowAdapter.notifyDataSetChanged();
                 return true;
-
-
 
 
             default: return false;

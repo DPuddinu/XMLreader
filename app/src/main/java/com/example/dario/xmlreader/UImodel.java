@@ -1,5 +1,6 @@
 package com.example.dario.xmlreader;
 
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,18 +15,16 @@ public class UImodel {
     private Button enter,from,to;
     private TextView results, textViewFrom,textViewTo,lastUpdate;
     private EditText amount;
-    private ListView list1;
+    private RecyclerView mRecyclerView;
 
 
-    public ListView getList1() {
-        return list1;
+    public RecyclerView getmRecyclerView() {
+        return mRecyclerView;
     }
 
-    public void setList1(ListView list1) {
-        this.list1 = list1;
+    public void setmRecyclerView(RecyclerView mRecyclerView) {
+        this.mRecyclerView = mRecyclerView;
     }
-
-
 
     public ArrayList<String> getStrings() {
         return strings;
