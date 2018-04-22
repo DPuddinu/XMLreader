@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import com.example.dario.xmlreader.ui.ButtonListenerManager;
 import com.example.dario.xmlreader.request.RequestHandler;
 import com.example.dario.xmlreader.request.ResponseParser;
-import com.example.dario.xmlreader.ui.RecyclerViewManager;
 import com.example.dario.xmlreader.ui.UIcontrol;
 
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private RequestHandler requestHandler = new RequestHandler(this);
     private UIcontrol uIcontrol;
     private ButtonListenerManager buttonListenerManager;
-    private RecyclerViewManager recyclerViewManager;
+
     private ResponseParser responseParser;
 
     @Override
@@ -39,22 +38,23 @@ public class MainActivity extends AppCompatActivity {
 
         responseParser = new ResponseParser();
         uIcontrol = new UIcontrol(this);
-        recyclerViewManager=new RecyclerViewManager(uIcontrol);
+
         CurrencyDB.getInstance().addObserver(uIcontrol);
         uIcontrol.setupViews();
         uIcontrol.setupAdapter();
 
-        buttonListenerManager = new ButtonListenerManager(uIcontrol,recyclerViewManager,this);
-        buttonListenerManager.setupListeners();
-
         responseParser.parseDocument(this,mResponse);
+
         uIcontrol.setupDate();
+
+        buttonListenerManager = new ButtonListenerManager(uIcontrol,this);
+        buttonListenerManager.setupListeners();
 
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        recyclerViewManager.hideRecyclerView();
+        uIcontrol.hideRecyclerView();
         return super.onTouchEvent(event);
     }
 

@@ -5,22 +5,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class UImodel {
 
     private Button enter,from,to;
     private TextView textViewResults, textViewFrom,textViewTo,lastUpdate;
     private EditText amount;
-    private RecyclerView mRecyclerView;
+    private RecyclerView recyclerView;
 
 
-    public RecyclerView getmRecyclerView() {
-        return mRecyclerView;
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 
-    public void setmRecyclerView(RecyclerView mRecyclerView) {
-        this.mRecyclerView = mRecyclerView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     public void setResults(String results){

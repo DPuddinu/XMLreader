@@ -18,15 +18,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private Context context;
     private ArrayList<String> elements;
     private LayoutInflater inflater;
-    private String clickedElement;
-    private int itemPosition;
-    public UIcontrol uIcontrol;
 
-    public RecycleViewAdapter(UIcontrol uIcontrol,Context context, ArrayList<String> elements) {
+
+    public RecycleViewAdapter(Context context, ArrayList<String> elements) {
         this.context = context;
         this.elements = elements;
         this.inflater = (LayoutInflater.from(context));
-        this.uIcontrol=uIcontrol;
+
         notifyItemRangeChanged(0,elements.size());
     }
 
@@ -41,24 +39,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.row.setText(elements.get(position));
-
-        holder.itemView.setOnClickListener(v -> {
-            itemPosition=position;
-            clickedElement=elements.get(position);
-
-            uIcontrol.sourceSetup(clickedElement);
-            uIcontrol.showRecyclerView();
-        });
     }
+
     public void removeAt(int position) {
         elements.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(0, elements.size());
     }
 
-    public int getItemPosition() {
-        return itemPosition;
-    }
 
     @Override
     public int getItemCount() {

@@ -10,15 +10,14 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-
 public class UIcontrol implements Observer{
 
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
-    private ArrayList<String> arrayList1 = new ArrayList<>();
+    private RecyclerViewListener recyclerViewListener = new RecyclerViewListener(this,activity);
+    private ArrayList<String> currenciesList = new ArrayList<>();
     private boolean isFrom=true;
-
     private RecycleViewAdapter rowAdapter;
 
     public UIcontrol(Activity activity) {
@@ -28,10 +27,15 @@ public class UIcontrol implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
-        arrayList1.add(lastItem);
-        rowAdapter.notifyItemRangeChanged(0,arrayList1.size());
+        currenciesList.add(lastItem);
+        rowAdapter.notifyItemRangeChanged(0, currenciesList.size());
     }
-    //VA INVOCATO QUANDO SI SCEGLIE UNA VALUTA
+    public void setupAdapter(){
+        rowAdapter = new RecycleViewAdapter(activity, currenciesList);
+        model.getRecyclerView().setAdapter(rowAdapter);
+        recyclerViewListener.setListener();
+    }
+
     public void sourceSetup(String name){
 
         if(isFrom){
@@ -44,12 +48,17 @@ public class UIcontrol implements Observer{
         }
     }
 
+    public void hideRecyclerView(){
+        model.getRecyclerView().setVisibility(View.INVISIBLE);
+    }
+
+    public void showRecyclerView(){
+        if(model.getRecyclerView().getVisibility()==View.INVISIBLE) model.getRecyclerView().setVisibility(View.VISIBLE);
+        else model.getRecyclerView().setVisibility(View.INVISIBLE);
+    }
+
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
-    }
-    public void setupAdapter(){
-        rowAdapter = new RecycleViewAdapter(this,activity,arrayList1);
-        model.getmRecyclerView().setAdapter(rowAdapter);
     }
 
     public void setupViews(){
@@ -62,17 +71,22 @@ public class UIcontrol implements Observer{
         model.setTextViewFrom(activity.findViewById(R.id.from));
         model.setTextViewTo(activity.findViewById(R.id.to));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setmRecyclerView(activity.findViewById(R.id.my_recycler_view));
+        model.setRecyclerView(activity.findViewById(R.id.my_recycler_view));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setmRecyclerView(activity.findViewById(R.id.my_recycler_view));
+        model.setRecyclerView(activity.findViewById(R.id.my_recycler_view));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
-        model.getmRecyclerView().setLayoutManager(linearLayoutManager);
+        model.getRecyclerView().setLayoutManager(linearLayoutManager);
+    }
+
+    public ArrayList<String> getCurrenciesList() {
+        return currenciesList;
     }
 
     public void setFrom(boolean from) {
         isFrom = from;
     }
+
     public boolean isFrom() {
         return isFrom;
     }
