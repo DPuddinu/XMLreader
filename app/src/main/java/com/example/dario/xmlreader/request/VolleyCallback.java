@@ -1,4 +1,4 @@
-package com.example.dario.xmlreader;
+package com.example.dario.xmlreader.request;
 
 import java.util.List;
 

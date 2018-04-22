@@ -1,6 +1,6 @@
-package com.example.dario.xmlreader;
+package com.example.dario.xmlreader.request;
 
-class CurrencyCalculator {
+public class CurrencyCalculator {
 
 
     private double from;

@@ -5,19 +5,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
+
+import com.example.dario.xmlreader.ui.ButtonListenerManager;
+import com.example.dario.xmlreader.request.RequestHandler;
+import com.example.dario.xmlreader.request.ResponseParser;
+import com.example.dario.xmlreader.ui.RecyclerViewManager;
+import com.example.dario.xmlreader.ui.UIcontrol;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private RequestHandler requestHandler = new RequestHandler(this);
     private UIcontrol uIcontrol;
+    private ButtonListenerManager buttonListenerManager;
+    private RecyclerViewManager recyclerViewManager;
     private ResponseParser responseParser;
 
     @Override
@@ -35,31 +39,22 @@ public class MainActivity extends AppCompatActivity {
 
         responseParser = new ResponseParser();
         uIcontrol = new UIcontrol(this);
+        recyclerViewManager=new RecyclerViewManager(uIcontrol);
         CurrencyDB.getInstance().addObserver(uIcontrol);
-        uIcontrol.setupUI();
+        uIcontrol.setupViews();
         uIcontrol.setupAdapter();
-        uIcontrol.setupListeners();
+
+        buttonListenerManager = new ButtonListenerManager(uIcontrol,recyclerViewManager,this);
+        buttonListenerManager.setupListeners();
+
         responseParser.parseDocument(this,mResponse);
         uIcontrol.setupDate();
-        uIcontrol.setupContextMenu();
-    }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.popup, menu);
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        uIcontrol.popupOperation(item.getItemId());
-        return super.onContextItemSelected(item);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        uIcontrol.hideListView();
+        recyclerViewManager.hideRecyclerView();
         return super.onTouchEvent(event);
     }
 

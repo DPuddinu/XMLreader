@@ -1,8 +1,12 @@
-package com.example.dario.xmlreader;
+package com.example.dario.xmlreader.request;
 
 import android.app.Activity;
 import android.content.res.Resources;
 import android.util.Log;
+
+import com.example.dario.xmlreader.CurrencyDB;
+import com.example.dario.xmlreader.CurrencyModel;
+import com.example.dario.xmlreader.R;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
