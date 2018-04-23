@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         buttonListenerManager = new ButtonListenerManager(uIcontrol,this);
         buttonListenerManager.setupListeners();
 
+
+
     }
 
     @Override

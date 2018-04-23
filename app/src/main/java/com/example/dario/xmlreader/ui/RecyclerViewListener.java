@@ -14,42 +14,38 @@ import java.util.ArrayList;
 public class RecyclerViewListener {
     private UIcontrol uicontrol;
     private Context context;
-    private boolean multiSelect = false;
-    private ArrayList<String> selectedItems = new ArrayList<>();
 
 
     public RecyclerViewListener(UIcontrol uicontrol, Context context) {
         this.uicontrol = uicontrol;
         this.context = context;
-
     }
+
     public void setListener(){
 
         uicontrol.getModel().getRecyclerView().addOnItemTouchListener(new RecyclerTouchManager(context,
                 uicontrol.getModel().getRecyclerView(), new ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                if(!multiSelect){
+
+                if(!uicontrol.getRowAdapter().isMultiSelect()){
                     uicontrol.sourceSetup(uicontrol.getCurrenciesList().get(position));
                     uicontrol.hideRecyclerView();
                 }
-                else
-                    selectItem(view,uicontrol.getCurrenciesList().get(position));
-                Log.e("avvenuto click","Single Click on position        :"+position);
             }
 
             @Override
             public void onLongClick(View view, int position) {
                 ((AppCompatActivity)view.getContext()).startSupportActionMode(actionModeCallbacks);
-                    selectItem(view,uicontrol.getCurrenciesList().get(position));
-                Log.e("avvenuto long click","Long Click on position        :"+position);
             }
         }));
     }
+
+
     private ActionMode.Callback actionModeCallbacks = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            multiSelect = true;
+            uicontrol.getRowAdapter().setMultiSelect(true);
             menu.add("Delete");
             return true;
         }
@@ -61,30 +57,20 @@ public class RecyclerViewListener {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            for (String intItem : selectedItems) {
-                uicontrol.getCurrenciesList().remove(intItem);
+            for (String string : uicontrol.getRowAdapter().getSelectedElements()) {
+                uicontrol.getRowAdapter().getElements().remove(string);
             }
+            uicontrol.getRowAdapter().notifyDataSetChanged();
             mode.finish();
             return true;
         }
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-            multiSelect = false;
-            selectedItems.clear();
-            uicontrol.getRowAdapter().notifyItemRangeChanged(0,uicontrol.getCurrenciesList().size());
+            uicontrol.getRowAdapter().setMultiSelect(false);
+            uicontrol.getRowAdapter().getSelectedElements().clear();
+            uicontrol.getRowAdapter().notifyDataSetChanged();
         }
     };
 
-    public void selectItem(View view,String string) {
-        if (multiSelect) {
-            if (selectedItems.contains(string)) {
-                selectedItems.remove(string);
-                view.setBackgroundColor(Color.LTGRAY);
-            } else {
-                selectedItems.add(string);
-                view.setBackgroundColor(Color.LTGRAY);
-            }
-        }
-    }
 }
