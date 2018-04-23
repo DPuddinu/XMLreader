@@ -43,17 +43,14 @@ class RecyclerTouchManager implements RecyclerView.OnItemTouchListener{
         if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
             clicklistener.onClick(child,rv.getChildAdapterPosition(child));
         }
-
         return false;
     }
 
     @Override
     public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
     }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
     }
 }

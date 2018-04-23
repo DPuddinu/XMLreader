@@ -83,6 +83,10 @@ public class UIcontrol implements Observer{
         return currenciesList;
     }
 
+    public RecycleViewAdapter getRowAdapter() {
+        return rowAdapter;
+    }
+
     public void setFrom(boolean from) {
         isFrom = from;
     }

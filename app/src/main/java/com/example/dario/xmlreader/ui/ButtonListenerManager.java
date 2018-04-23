@@ -20,9 +20,7 @@ public class ButtonListenerManager {
     public ButtonListenerManager(UIcontrol uicontrol, Activity activity) {
         this.uicontrol = uicontrol;
         this.activity=activity;
-
     }
-
 
     public void setupListeners() {
 
@@ -37,7 +35,6 @@ public class ButtonListenerManager {
 
         uicontrol.getModel().getFrom().setOnClickListener(v -> {
             uicontrol.showRecyclerView();
-
             uicontrol.setFrom(true);
         });
 
@@ -54,7 +51,4 @@ public class ButtonListenerManager {
     private void setAmount() {
         uicontrol.getCurrencyCalculator().setQuantity(Double.valueOf(uicontrol.getModel().getAmount().getText().toString()));
     }
-
-
-
 }
