@@ -18,7 +18,6 @@ import com.example.dario.xmlreader.R;
 
 import java.util.ArrayList;
 
-
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.MyViewHolder>{
 
     private Context context;
@@ -26,6 +25,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private LayoutInflater inflater;
     private ArrayList<String> elements;
     private boolean multiSelect = false;
+
 
     public boolean isMultiSelect() {
         return multiSelect;
@@ -49,6 +49,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.update(elements.get(position));
+
     }
 
     @Override
@@ -63,7 +64,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             row = itemView.findViewById(R.id.rowNameId);
         }
 
@@ -72,6 +72,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             string=value;
 
             itemView.setOnClickListener(v-> selectItem(value) );
+            if(selectedElements.contains(value))row.setBackgroundColor(Color.LTGRAY);
+            else row.setBackground(context.getDrawable(R.drawable.back));
         }
         void selectItem(String item) {
             if (multiSelect) {
