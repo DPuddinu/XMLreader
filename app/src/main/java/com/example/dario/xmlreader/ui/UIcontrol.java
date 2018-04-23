@@ -1,8 +1,8 @@
 package com.example.dario.xmlreader.ui;
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.example.dario.xmlreader.CurrencyDB;
 import com.example.dario.xmlreader.R;
 import com.example.dario.xmlreader.request.CurrencyCalculator;
@@ -12,56 +12,53 @@ import java.util.Observer;
 
 public class UIcontrol implements Observer{
 
+    //TOGLIERE CurrencyCalculator da qua
     private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
+    //TOGLIERE RecyclerViewListener da qua
     private RecyclerViewListener recyclerViewListener = new RecyclerViewListener(this,activity);
-    private ArrayList<String> currenciesList = new ArrayList<>();
+    private ArrayList<String> currenciesList = CurrencyDB.getInstance().getCurrencyNames();
+    private ArrayList<String> cryptoCurrenciesList = CurrencyDB.getInstance().getCryptoCurrencyNames();
     private boolean isFrom=true;
-    private RecycleViewAdapter rowAdapter;
+    private RecycleViewAdapter currencyAdapter;
+    private RecycleViewAdapter cryptoCurrencyAdapter;
 
     public UIcontrol(Activity activity) {
         this.activity=activity;
+        setupViews();
+        setupAdapter();
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        String lastItem = CurrencyDB.getInstance().getLastItem().getFullName();
-        currenciesList.add(lastItem);
-        rowAdapter.notifyItemRangeChanged(0, currenciesList.size());
+
+        currencyAdapter.notifyDataSetChanged();
+        cryptoCurrencyAdapter.notifyDataSetChanged();
     }
+
     public void setupAdapter(){
-        rowAdapter = new RecycleViewAdapter(activity, currenciesList);
-        model.getRecyclerView().setAdapter(rowAdapter);
+        currencyAdapter = new RecycleViewAdapter(activity, currenciesList);
+        cryptoCurrencyAdapter = new RecycleViewAdapter(activity,cryptoCurrenciesList);
+        model.getRecyclerView().setAdapter(currencyAdapter);
+        model.getRecyclerView1().setAdapter(cryptoCurrencyAdapter);
         recyclerViewListener.setListener();
     }
 
-    public void sourceSetup(String name){
-
-        if(isFrom){
-            currencyCalculator.setFrom(CurrencyDB.getInstance().getCurrencyValue(name));
-            model.getTextViewFrom().setText(CurrencyDB.getInstance().getShortName(name));
-        }
-        else {
-            currencyCalculator.setTo(CurrencyDB.getInstance().getCurrencyValue(name));
-            model.getTextViewTo().setText(CurrencyDB.getInstance().getShortName(name));
-        }
+    public void hideRecyclerView(RecyclerView recyclerView){
+        recyclerView.setVisibility(View.INVISIBLE);
     }
 
-    public void hideRecyclerView(){
-        model.getRecyclerView().setVisibility(View.INVISIBLE);
-    }
-
-    public void showRecyclerView(){
-        if(model.getRecyclerView().getVisibility()==View.INVISIBLE) model.getRecyclerView().setVisibility(View.VISIBLE);
-        else model.getRecyclerView().setVisibility(View.INVISIBLE);
+    public void showRecyclerView(RecyclerView recyclerView){
+        if(recyclerView.getVisibility()==View.INVISIBLE) recyclerView.setVisibility(View.VISIBLE);
+        else recyclerView.setVisibility(View.INVISIBLE);
     }
 
     public void setupDate(){
         model.getLastUpdate().setText(String.valueOf("Last update: " + CurrencyDB.getInstance().getLastUpdate()));
     }
 
-    public void setupViews(){
+    public void setupViews() {
 
         model.setEnter((activity.findViewById(R.id.invio)));
         model.setFrom(activity.findViewById(R.id.fromButton));
@@ -71,20 +68,29 @@ public class UIcontrol implements Observer{
         model.setTextViewFrom(activity.findViewById(R.id.from));
         model.setTextViewTo(activity.findViewById(R.id.to));
         model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setRecyclerView(activity.findViewById(R.id.my_recycler_view));
-        model.setLastUpdate(activity.findViewById(R.id.lastUpdate));
-        model.setRecyclerView(activity.findViewById(R.id.my_recycler_view));
+        model.setRecyclerView(activity.findViewById(R.id.recycler_currency));
+        model.setRecyclerView1(activity.findViewById(R.id.recycler_cryptourrency));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(activity);
         model.getRecyclerView().setLayoutManager(linearLayoutManager);
+        model.getRecyclerView1().setLayoutManager(linearLayoutManager1);
+    }
+
+    public RecycleViewAdapter getCryptoCurrencyAdapter() {
+        return cryptoCurrencyAdapter;
+    }
+
+    public ArrayList<String> getCryptoCurrenciesList() {
+        return cryptoCurrenciesList;
     }
 
     public ArrayList<String> getCurrenciesList() {
         return currenciesList;
     }
 
-    public RecycleViewAdapter getRowAdapter() {
-        return rowAdapter;
+    public RecycleViewAdapter getCurrencyAdapter() {
+        return currencyAdapter;
     }
 
     public void setFrom(boolean from) {

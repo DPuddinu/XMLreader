@@ -2,25 +2,21 @@ package com.example.dario.xmlreader;
 
 public class CurrencyModel {
     private String fullName;
-    private String shortName;
+    private String id;
     private String rate;
 
-    public CurrencyModel(String fullName,String shortName, String rate) {
+    public CurrencyModel(String fullName, String id, String rate) {
         this.fullName=fullName;
-        this.shortName = shortName;
+        this.id = id;
         this.rate = rate;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public String getShortName() {
-        return shortName;
+    public String getId() {
+        return id;
     }
 
     public Double getRate() {

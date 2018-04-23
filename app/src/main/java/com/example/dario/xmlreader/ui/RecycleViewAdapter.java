@@ -49,7 +49,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.update(elements.get(position));
-
     }
 
     @Override
@@ -79,14 +78,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             if (multiSelect) {
                 if (selectedElements.contains(item)) {
                     selectedElements.remove(item);
-                    row.setBackgroundColor(Color.WHITE);
+                    row.setBackground(context.getDrawable(R.drawable.back));
                 } else {
                     selectedElements.add(item);
                     row.setBackgroundColor(Color.LTGRAY);
                 }
             }
             if(selectedElements.contains(string))row.setBackgroundColor(Color.LTGRAY);
-            else row.setBackgroundColor(Color.WHITE);
+            else row.setBackground(context.getDrawable(R.drawable.back));
         }
     }
 

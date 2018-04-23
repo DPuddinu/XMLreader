@@ -2,26 +2,26 @@ package com.example.dario.xmlreader.request;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.util.Log;
-
 import com.example.dario.xmlreader.CurrencyDB;
 import com.example.dario.xmlreader.CurrencyModel;
 import com.example.dario.xmlreader.R;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class ResponseParser {
+public class CurrencyParser implements Parser{
 
+    private Activity activity;
 
-    public void parseDocument(Activity activity,String response ){
+    public CurrencyParser(Activity activity) {
+        this.activity = activity;
+    }
+    @Override
+    public void parseDocument(String response ){
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;

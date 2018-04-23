@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
+import com.example.dario.xmlreader.request.CryptoCurrencyParser;
+import com.example.dario.xmlreader.request.CryptoCurrencyRequest;
+import com.example.dario.xmlreader.request.CurrencyRequest;
 import com.example.dario.xmlreader.ui.ButtonListenerManager;
 import com.example.dario.xmlreader.request.RequestHandler;
-import com.example.dario.xmlreader.request.ResponseParser;
+import com.example.dario.xmlreader.request.CurrencyParser;
 import com.example.dario.xmlreader.ui.UIcontrol;
 
 
@@ -20,43 +24,58 @@ public class MainActivity extends AppCompatActivity {
     private RequestHandler requestHandler = new RequestHandler(this);
     private UIcontrol uIcontrol;
     private ButtonListenerManager buttonListenerManager;
-
-    private ResponseParser responseParser;
-
+    private CurrencyParser currencyParser;
+    private CryptoCurrencyParser cryptoCurrencyParser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
 
+
+        setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.my_toolbar));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        requestHandler.fetchDocument();
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        String mResponse = m.getString("Response", "");
+        //FACCIO LE RICHIESTE
+        requestHandler.doRequest(new CurrencyRequest(),"currency");
+        requestHandler.doRequest(new CryptoCurrencyRequest(),"cryptocurrency");
 
-        responseParser = new ResponseParser();
+        //SALVO I RESPONSE NELLE STRINGHE SEGUENTI
+        String currencyResponse = sharedPreferences.getString("currency", "");
+        String cryptoCurrencyResponse = sharedPreferences.getString("cryptocurrency", "");
+
+        //CREO I PARSER
+        currencyParser = new CurrencyParser(this);
+        cryptoCurrencyParser = new CryptoCurrencyParser();
+
+        //CREO UIcontrol E SETTO L'OBSERVER
         uIcontrol = new UIcontrol(this);
-
         CurrencyDB.getInstance().addObserver(uIcontrol);
-        uIcontrol.setupViews();
-        uIcontrol.setupAdapter();
 
-        responseParser.parseDocument(this,mResponse);
+        //ESEGUO I PARSE DEI DUE DOCUMENTI E CARICO I RISULTATI NEGLI ARRAYLIST CORRISPONDENTI DEL DB
+        cryptoCurrencyParser.parseDocument(cryptoCurrencyResponse);
+        currencyParser.parseDocument(currencyResponse);
+        CurrencyDB.getInstance().loadNames();
 
+        //VISUALIZZO LA DATA DELL'ULTIMO AGGIORNAMENTO DEI DATI
         uIcontrol.setupDate();
 
+        //CREO LA CLASSE CHE SI OCCUPA DEI BUTTONLISTENER
         buttonListenerManager = new ButtonListenerManager(uIcontrol,this);
         buttonListenerManager.setupListeners();
+        names();
+    }
 
-
-
+    public void names(){
+        Log.e("currency size",""+CurrencyDB.getInstance().getCurrencyNames().size());
+        Log.e("cryptoCurrency size",""+CurrencyDB.getInstance().getCryptoCurrencyNames().size());
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        uIcontrol.hideRecyclerView();
+        uIcontrol.hideRecyclerView(uIcontrol.getModel().getRecyclerView());
+        uIcontrol.hideRecyclerView(uIcontrol.getModel().getRecyclerView1());
         return super.onTouchEvent(event);
     }
 

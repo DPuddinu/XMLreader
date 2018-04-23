@@ -6,22 +6,20 @@ import android.preference.PreferenceManager;
 
 public class RequestHandler {
 
-    private RatesRequest ratesRequest = new RatesRequest();
     private Context context;
 
     public RequestHandler(Context context) {
         this.context = context;
     }
 
-    public void setResponse(String response) {
+    public void setResponse(String response,String name) {
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = m.edit();
-        editor.putString("Response", response);
+        editor.putString(name, response);
         editor.apply();
     }
 
-    public void fetchDocument(){
-
-        ratesRequest.doRequest(context, string -> setResponse(string));
+    public void doRequest(Request request,String out){
+        request.doRequest(context,string -> setResponse(string,out));
     }
 }

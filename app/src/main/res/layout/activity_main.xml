@@ -172,7 +172,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/recycler_cryptourrency"
         android:layout_width="181dp"
         android:layout_height="255dp"
         android:layout_marginBottom="8dp"
@@ -184,5 +184,21 @@
         app:layout_constraintEnd_toEndOf="@+id/toButton"
         app:layout_constraintStart_toStartOf="@+id/fromButton"
         app:layout_constraintTop_toBottomOf="@+id/lastUpdate" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_currency"
+        android:layout_width="181dp"
+        android:layout_height="255dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/invio"
+        app:layout_constraintEnd_toEndOf="@+id/toButton"
+        app:layout_constraintStart_toStartOf="@+id/fromButton"
+        app:layout_constraintTop_toBottomOf="@+id/lastUpdate">
+
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

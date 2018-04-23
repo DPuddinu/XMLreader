@@ -11,8 +11,9 @@ public class CurrencyCalculator {
     public boolean isReady(){
         return from != 0 && to != 0 && quantity != 0;
     }
+
     public double calculate(){
-        return (quantity/from)*to;
+        return (quantity*from)/to;
     }
 
     public double getFrom() {

@@ -28,8 +28,8 @@ public class CustomCurrency extends AppCompatActivity {
             String temp=rate.getText().toString();
 
             CurrencyModel model = new CurrencyModel(fullname,shortname,temp);
-            CurrencyDB.getInstance().addCurrency(model);
-
+            if(!CurrencyDB.getInstance().getCurrencyList().contains(model))CurrencyDB.getInstance().addCurrency(model);
+            finish();
         });
     }
 }

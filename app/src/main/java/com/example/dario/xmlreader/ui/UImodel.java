@@ -11,8 +11,15 @@ public class UImodel {
     private Button enter,from,to;
     private TextView textViewResults, textViewFrom,textViewTo,lastUpdate;
     private EditText amount;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,recyclerView1;
 
+    public RecyclerView getRecyclerView1() {
+        return recyclerView1;
+    }
+
+    public void setRecyclerView1(RecyclerView recyclerView1) {
+        this.recyclerView1 = recyclerView1;
+    }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
