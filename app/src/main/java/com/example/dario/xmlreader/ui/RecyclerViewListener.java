@@ -29,7 +29,7 @@ public class RecyclerViewListener {
 
                 if(!uicontrol.getCurrencyAdapter().isMultiSelect()){
                     String fullname=uicontrol.getCryptoCurrenciesList().get(position) ;
-                    String id=CurrencyDB.getInstance().getShortName(fullname);
+                    String id=CurrencyDB.getInstance().getShortName(fullname,CurrencyDB.getInstance().getCryptoCurrencyList());
                     Double value= CurrencyDB.getInstance().getCryptoCurrencyValue(fullname);
 
                     uicontrol.getCurrencyCalculator().setFrom(value);
@@ -52,7 +52,7 @@ public class RecyclerViewListener {
 
                 if(!uicontrol.getCurrencyAdapter().isMultiSelect()){
                     String fullname=uicontrol.getCurrenciesList().get(position) ;
-                    String id=CurrencyDB.getInstance().getShortName(fullname);
+                    String id=CurrencyDB.getInstance().getShortName(fullname,CurrencyDB.getInstance().getCurrencyList());
                     Double value= CurrencyDB.getInstance().getCurrencyValue(fullname);
 
                     uicontrol.getCurrencyCalculator().setTo(value);
@@ -106,6 +106,9 @@ public class RecyclerViewListener {
             uicontrol.getCurrencyAdapter().setMultiSelect(false);
             uicontrol.getCurrencyAdapter().getSelectedElements().clear();
             uicontrol.getCurrencyAdapter().notifyDataSetChanged();
+            uicontrol.getCryptoCurrencyAdapter().setMultiSelect(false);
+            uicontrol.getCryptoCurrencyAdapter().getSelectedElements().clear();
+            uicontrol.getCryptoCurrencyAdapter().notifyDataSetChanged();
         }
     };
 }

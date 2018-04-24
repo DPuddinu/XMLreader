@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@android:color/background_light"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -20,17 +19,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <EditText
+        android:id="@+id/etQuantita"
+        android:layout_width="107dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+
+        android:gravity="center"
+        android:hint="@string/amount"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textColor="#a17f5138"
+        android:textColorHint="#a17f5138"
+        android:textColorLink="#a17f5138"
+        android:textSize="18sp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/tvRisultato"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_currency"
+        app:layout_constraintVertical_bias="0.51" />
+
     <TextView
         android:id="@+id/tvRisultato"
         android:layout_width="107dp"
         android:layout_height="41dp"
-        android:backgroundTint="#38f1890a"
-        android:fontFamily="sans-serif"
-        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border"
+        android:contextClickable="false"
+
+        android:gravity="center"
         android:text="@string/result"
         android:textAlignment="center"
         android:textColor="#a17f5138"
+        android:textColorHighlight="#a17f5138"
         android:textColorHint="#a17f5138"
+        android:textColorLink="#a17f5138"
         android:textSize="18sp"
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,55 +114,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
-        android:id="@+id/etQuantita"
-        android:layout_width="107dp"
-        android:layout_height="47dp"
-        android:backgroundTint="#cff1890a"
-        android:ems="10"
-        android:hint="@string/amount"
-        android:inputType="number"
-        android:textAlignment="center"
-        android:textColorHint="#a17f5138"
-        android:typeface="monospace"
-        app:layout_constraintBottom_toTopOf="@+id/tvRisultato"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851" />
-
     <TextView
         android:id="@+id/from"
-        android:layout_width="0dp"
-        android:layout_height="23dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="68dp"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/fromButton"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/etQuantita"
+        app:layout_constraintEnd_toStartOf="@+id/etQuantita"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/fromButton"
-        app:layout_constraintTop_toBottomOf="@+id/fromButton"
-        app:layout_constraintVertical_bias="0.031" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etQuantita"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/to"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_width="68dp"
+        android:layout_height="41dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/toButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/toButton"
-        app:layout_constraintTop_toBottomOf="@+id/toButton"
-        app:layout_constraintVertical_bias="0.038" />
+        android:textColorLink="#78424242"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRisultato"
+        app:layout_constraintEnd_toStartOf="@+id/tvRisultato"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvRisultato"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/lastUpdate"

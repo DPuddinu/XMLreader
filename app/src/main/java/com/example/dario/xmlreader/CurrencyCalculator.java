@@ -1,4 +1,4 @@
-package com.example.dario.xmlreader.request;
+package com.example.dario.xmlreader;
 
 public class CurrencyCalculator {
 

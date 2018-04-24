@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.example.dario.xmlreader.CurrencyDB;
 import com.example.dario.xmlreader.R;
-import com.example.dario.xmlreader.request.CurrencyCalculator;
+import com.example.dario.xmlreader.CurrencyCalculator;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -20,7 +20,6 @@ public class UIcontrol implements Observer{
     private RecyclerViewListener recyclerViewListener = new RecyclerViewListener(this,activity);
     private ArrayList<String> currenciesList = CurrencyDB.getInstance().getCurrencyNames();
     private ArrayList<String> cryptoCurrenciesList = CurrencyDB.getInstance().getCryptoCurrencyNames();
-    private boolean isFrom=true;
     private RecycleViewAdapter currencyAdapter;
     private RecycleViewAdapter cryptoCurrencyAdapter;
 
@@ -91,14 +90,6 @@ public class UIcontrol implements Observer{
 
     public RecycleViewAdapter getCurrencyAdapter() {
         return currencyAdapter;
-    }
-
-    public void setFrom(boolean from) {
-        isFrom = from;
-    }
-
-    public boolean isFrom() {
-        return isFrom;
     }
 
     public CurrencyCalculator getCurrencyCalculator() {

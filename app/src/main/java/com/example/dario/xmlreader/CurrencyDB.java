@@ -1,5 +1,7 @@
 package com.example.dario.xmlreader;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,15 +33,23 @@ public class CurrencyDB extends Observable{
         return mInstance;
     }
 
+    public void addTo(CurrencyModel currencyModel, ArrayList<CurrencyModel> modelArrayList, HashMap<String,Double> map){
+        modelArrayList.add(currencyModel);
+        map.put(currencyModel.getFullName(),currencyModel.getRate());
+    }
+
+
     public void addcryptoCurrency(CurrencyModel currencyModel){
         cryptoCurrencyList.add(currencyModel);
         cryptoCurrencyMap.put(currencyModel.getFullName(),currencyModel.getRate());
+        cryptoCurrencyNames.add(currencyModel.getFullName());
         setChanged();
         notifyObservers();
     }
 
     public void addCurrency(CurrencyModel currency){
         currencyList.add(currency);
+        currencyNames.add(currency.getFullName());
         currencyMap.put(currency.getFullName(),currency.getRate());
         setChanged();
         notifyObservers();
@@ -55,20 +65,23 @@ public class CurrencyDB extends Observable{
         }
     }
 
-    public String getShortName(String fullname){
+    public String getShortName(String fullname,List<CurrencyModel> currencyList){
+
+
+        String s="";
         for (int i = 0; i < currencyList.size(); i++) {
-            if(fullname.equals(currencyList.get(i).getFullName())){
-                return currencyList.get(i).getId();
-            }
-        }
-        for (int i = 0; i < cryptoCurrencyList.size(); i++) {
-            if(fullname.equals(cryptoCurrencyList.get(i).getFullName())){
-                return cryptoCurrencyList.get(i).getId();
+            if(currencyList.get(i).getFullName().equals(fullname)){
+                s=currencyList.get(i).getId();
             }
         }
 
-        return null;
+        return s;
     }
+
+    public List<CurrencyModel> getCryptoCurrencyList() {
+        return cryptoCurrencyList;
+    }
+
     public String getLastUpdate() {
         return lastUpdate;
     }

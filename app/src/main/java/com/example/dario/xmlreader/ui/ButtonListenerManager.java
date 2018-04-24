@@ -37,13 +37,13 @@ public class ButtonListenerManager {
         uicontrol.getModel().getFrom().setOnClickListener(v -> {
             uicontrol.showRecyclerView(uicontrol.getModel().getRecyclerView1());
             if(uicontrol.getModel().getRecyclerView().getVisibility()==View.VISIBLE)uicontrol.getModel().getRecyclerView().setVisibility(View.INVISIBLE);
-            uicontrol.setFrom(true);
+
         });
 
         uicontrol.getModel().getTo().setOnClickListener(v ->{
             uicontrol.showRecyclerView(uicontrol.getModel().getRecyclerView());
             if(uicontrol.getModel().getRecyclerView1().getVisibility()==View.VISIBLE)uicontrol.getModel().getRecyclerView1().setVisibility(View.INVISIBLE);
-            uicontrol.setFrom(false);
+
         });
     }
     private String results(){
