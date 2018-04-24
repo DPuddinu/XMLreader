@@ -5,17 +5,18 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
-import com.example.dario.xmlreader.request.CryptoCurrencyParser;
-import com.example.dario.xmlreader.request.CryptoCurrencyRequest;
-import com.example.dario.xmlreader.request.CurrencyRequest;
-import com.example.dario.xmlreader.ui.ButtonListenerManager;
+import com.example.dario.xmlreader.request.CryptoCurrencyIParser;
+import com.example.dario.xmlreader.request.CryptoCurrencyIRequest;
+import com.example.dario.xmlreader.request.CurrencyIRequest;
+import com.example.dario.xmlreader.ui.listeners.SelectButtonListener;
 import com.example.dario.xmlreader.request.RequestHandler;
-import com.example.dario.xmlreader.request.CurrencyParser;
+import com.example.dario.xmlreader.request.CurrencyIParser;
+import com.example.dario.xmlreader.ui.listeners.CryptocurrencyItemListener;
+import com.example.dario.xmlreader.ui.listeners.CurrencyItemListener;
 import com.example.dario.xmlreader.ui.UIcontrol;
 
 
@@ -23,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestHandler requestHandler = new RequestHandler(this);
     private UIcontrol uIcontrol;
-    private ButtonListenerManager buttonListenerManager;
-    private CurrencyParser currencyParser;
-    private CryptoCurrencyParser cryptoCurrencyParser;
+    private SelectButtonListener selectButtonListener;
+    private CurrencyIParser currencyParser;
+    private CryptoCurrencyIParser cryptoCurrencyParser;
+    private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.my_toolbar));
@@ -38,16 +39,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         //FACCIO LE RICHIESTE
-        requestHandler.doRequest(new CurrencyRequest(),"currency");
-        requestHandler.doRequest(new CryptoCurrencyRequest(),"cryptocurrency");
+        requestHandler.doRequest(new CurrencyIRequest(),"currency");
+        requestHandler.doRequest(new CryptoCurrencyIRequest(),"cryptocurrency");
 
         //SALVO I RESPONSE NELLE STRINGHE SEGUENTI
         String currencyResponse = sharedPreferences.getString("currency", "");
         String cryptoCurrencyResponse = sharedPreferences.getString("cryptocurrency", "");
 
         //CREO I PARSER
-        currencyParser = new CurrencyParser(this);
-        cryptoCurrencyParser = new CryptoCurrencyParser();
+        currencyParser = new CurrencyIParser(this);
+        cryptoCurrencyParser = new CryptoCurrencyIParser();
 
         //CREO UIcontrol E SETTO L'OBSERVER
         uIcontrol = new UIcontrol(this);
@@ -62,14 +63,17 @@ public class MainActivity extends AppCompatActivity {
         uIcontrol.setupDate();
 
         //CREO LA CLASSE CHE SI OCCUPA DEI BUTTONLISTENER
-        buttonListenerManager = new ButtonListenerManager(uIcontrol,this);
-        buttonListenerManager.setupListeners();
-        names();
-    }
+        selectButtonListener = new SelectButtonListener(uIcontrol,this);
+        selectButtonListener.setupListeners();
+        selectButtonListener.setiCalculate(new CurrencyCalculator());
 
-    public void names(){
-        Log.e("currency size",""+CurrencyDB.getInstance().getCurrencyNames().size());
-        Log.e("cryptoCurrency size",""+CurrencyDB.getInstance().getCryptoCurrencyNames().size());
+        //CREO I LISTENER CHE GESTISCONO I COMPORTAMENTI DELLE VALUTE QUANDO VENGONO SELEZIONATE
+        CryptocurrencyItemListener cryptocurrencyItemListener = new CryptocurrencyItemListener(uIcontrol,this);
+        cryptocurrencyItemListener.setListener();
+
+        CurrencyItemListener CurrencyItemListener = new CurrencyItemListener(uIcontrol,this);
+        CurrencyItemListener.setListener();
+
     }
 
     @Override

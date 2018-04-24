@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CryptoCurrencyParser implements Parser{
+public class CryptoCurrencyIParser implements IParser {
 
     @Override
     public void parseDocument(String response){

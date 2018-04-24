@@ -67,14 +67,12 @@ public class CurrencyDB extends Observable{
 
     public String getShortName(String fullname,List<CurrencyModel> currencyList){
 
-
         String s="";
         for (int i = 0; i < currencyList.size(); i++) {
             if(currencyList.get(i).getFullName().equals(fullname)){
                 s=currencyList.get(i).getId();
             }
         }
-
         return s;
     }
 

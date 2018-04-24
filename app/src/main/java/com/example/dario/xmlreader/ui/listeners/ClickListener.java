@@ -1,4 +1,4 @@
-package com.example.dario.xmlreader.ui;
+package com.example.dario.xmlreader.ui.listeners;
 
 import android.view.View;
 

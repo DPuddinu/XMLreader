@@ -12,12 +12,8 @@ import java.util.Observer;
 
 public class UIcontrol implements Observer{
 
-    //TOGLIERE CurrencyCalculator da qua
-    private CurrencyCalculator currencyCalculator = new CurrencyCalculator();
     private UImodel model = new UImodel();
     private Activity activity;
-    //TOGLIERE RecyclerViewListener da qua
-    private RecyclerViewListener recyclerViewListener = new RecyclerViewListener(this,activity);
     private ArrayList<String> currenciesList = CurrencyDB.getInstance().getCurrencyNames();
     private ArrayList<String> cryptoCurrenciesList = CurrencyDB.getInstance().getCryptoCurrencyNames();
     private RecycleViewAdapter currencyAdapter;
@@ -41,7 +37,6 @@ public class UIcontrol implements Observer{
         cryptoCurrencyAdapter = new RecycleViewAdapter(activity,cryptoCurrenciesList);
         model.getRecyclerView().setAdapter(currencyAdapter);
         model.getRecyclerView1().setAdapter(cryptoCurrencyAdapter);
-        recyclerViewListener.setListener();
     }
 
     public void hideRecyclerView(RecyclerView recyclerView){
@@ -90,10 +85,6 @@ public class UIcontrol implements Observer{
 
     public RecycleViewAdapter getCurrencyAdapter() {
         return currencyAdapter;
-    }
-
-    public CurrencyCalculator getCurrencyCalculator() {
-        return currencyCalculator;
     }
 
     public UImodel getModel() {

@@ -2,6 +2,6 @@ package com.example.dario.xmlreader.request;
 
 import android.content.Context;
 
-public interface Request {
+public interface IRequest {
     void doRequest(Context context, final VolleyCallback callback);
 }

@@ -19,7 +19,7 @@ public class RequestHandler {
         editor.apply();
     }
 
-    public void doRequest(Request request,String out){
-        request.doRequest(context,string -> setResponse(string,out));
+    public void doRequest(IRequest IRequest, String out){
+        IRequest.doRequest(context, string -> setResponse(string,out));
     }
 }

@@ -13,11 +13,11 @@ import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class CurrencyParser implements Parser{
+public class CurrencyIParser implements IParser {
 
     private Activity activity;
 
-    public CurrencyParser(Activity activity) {
+    public CurrencyIParser(Activity activity) {
         this.activity = activity;
     }
     @Override

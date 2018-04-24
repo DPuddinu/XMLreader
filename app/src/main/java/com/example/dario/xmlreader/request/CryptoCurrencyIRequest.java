@@ -4,7 +4,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 
-public class CryptoCurrencyRequest implements com.example.dario.xmlreader.request.Request{
+public class CryptoCurrencyIRequest implements IRequest {
 
     private static String url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR";
 

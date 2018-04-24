@@ -6,7 +6,9 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-class RecyclerTouchManager implements RecyclerView.OnItemTouchListener{
+import com.example.dario.xmlreader.ui.listeners.ClickListener;
+
+public class RecyclerTouchManager implements RecyclerView.OnItemTouchListener{
 
     private ClickListener clicklistener;
     private GestureDetector gestureDetector;

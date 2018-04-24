@@ -1,5 +1,5 @@
 package com.example.dario.xmlreader.request;
 
-public interface Parser {
+public interface IParser {
     void parseDocument(String string);
 }
